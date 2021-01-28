@@ -1,8 +1,10 @@
 <launch>
 <!-- Add nodes here -->
     
-    <!-- Map Server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="/home/workspace/catkin_ws/src/my_robot/maps/map.yaml" />
+    <!-- Map File -->
+    <arg name="map_file" default="$(find my_robot)/maps/map.yaml"/>
+    <!-- Map Server Node -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
     <!-- AMCL Node -->
     <node name="amcl" pkg="amcl" type="amcl" output="screen">
@@ -17,6 +19,7 @@
         <!-- If you choose to define initial pose here -->
         <param name="initial_pose_x" value="0"/>
         <param name="initial_pose_y" value="0"/>
+        <param name="initial_pose_a" value="-1.57"/>
 
         <!-- Laser Parameters-->
         <param name="laser_min_range" value="-1.0" />
@@ -46,11 +49,11 @@
         <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
         
         <!-- Config Files -->
-        <rosparam file="/home/workspace/catkin_ws/src/my_robot/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="/home/workspace/catkin_ws/src/my_robot/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-        <rosparam file="/home/workspace/catkin_ws/src/my_robot/config/local_costmap_params.yaml" command="load" />
-        <rosparam file="/home/workspace/catkin_ws/src/my_robot/config/global_costmap_params.yaml" command="load" />
-        <rosparam file="/home/workspace/catkin_ws/src/my_robot/config/base_local_planner_params.yaml" command="load" />
+        <rosparam file="$(find my_robot)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find my_robot)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find my_robot)/config/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find my_robot)/config/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find my_robot)/config/base_local_planner_params.yaml" command="load" />
     </node>
 
 </launch>
